@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <title>
+        <%=title%>
+    </title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="columns is-desktop">
+            <div class="column">
+                <table class="table is-hoverable">
+                    <tbody>
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <!-- <th>Club</th> -->
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <% nations.forEach(function(nation){%>
+                            <a href="#" class="mt-2">
+                                <tr>
+                                    <td>
+                                        <figure class="image is-3by4">
+                                            <img src=<%=nation.image %>>
+                                        </figure>
+
+                                    </td>
+                                    <td>
+                                        <%= nation.name %>
+                                    </td>
+                                    <!-- <td>
+                                        <%= nation.club %>
+                                    </td> -->
+                                    <td>
+                                        <div class="buttons are-small">
+                                            <a class="button is-warning is-light"
+                                                href="/nations/edit/<%= nation._id%>">Edit</a>
+                                            <a class="button is-danger is-light"
+                                                href="/nations/delete/<%= nation._id%>">Delete</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </a>
+                            <%})%>
+                    </tbody>
+                </table>
+            </div>
+            <div class="column">
+                <form method="post" class="box">
+                    <div class="field">
+                        <label class="label">Name</label>
+                        <div class="control">
+                            <input class="input is-info" type="text" name="name" placeholder="Text input">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Image</label>
+                        <div class="control">
+                            <input class="input is-info" type="text" name="image" placeholder="URL of image">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="control">
+                            <button class="button is-primary" type="submit">Create</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
