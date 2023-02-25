@@ -6,77 +6,126 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-    <link rel="stylesheet" href="../public/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/style.css">
     <title>
         <%=title%>
     </title>
+    <style>
+        .card:hover{
+            background-color: #00c4a7;
+            margin-left: 0;
+            margin-right: 0;
+        }
+        .img-avt{
+            border-radius: 5px;
+        }
+    </style>
 </head>
 
 <body>
-    <nav class="navbar" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand">
-            <a class="navbar-item" href="https://bulma.io">
-                <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
-            </a>
+   
     
-            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-            </a>
-        </div>
-    
-        <div id="navbarBasicExample" class="navbar-menu">
-            <div class="navbar-start">
-                <a class="navbar-item">
-                    Home
-                </a>
-    
-                <a class="navbar-item">
-                    Documentation
-                </a>
-    
-                <div class="navbar-item has-dropdown is-hoverable">
-                    <a class="navbar-link">
-                        More
-                    </a>
-    
-                    <div class="navbar-dropdown">
-                        <a class="navbar-item">
-                            About
-                        </a>
-                        <a class="navbar-item">
-                            Jobs
-                        </a>
-                        <a class="navbar-item">
-                            Contact
-                        </a>
-                        <hr class="navbar-divider">
-                        <a class="navbar-item">
-                            Report an issue
-                        </a>
-                    </div>
-                </div>
-            </div>
-    
-            <div class="navbar-end">
-                <div class="navbar-item">
-                    <div class="buttons">
-                        <a class="button is-primary">
-                            <strong>Sign up</strong>
-                        </a>
-                        <a class="button is-light">
-                            Log in
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
     <div class="container">
+        <nav class="navbar" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="#">
+                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAACoCAMAAABt9SM9AAABGlBMVEUJHD7N+wr///8AAEAAAEHW/wAAACsAADMAACQAACgAAC3Q/gcAFToAADAFyWkFGj0JADtUXGwADTYAACIJFz0ADz8AFT4AGDuPkpwIBDsTk1wAETk2QVciLkoACDXQ0td0eYYNLEKcoKfg4eSsr7av1hwLtWQLPUUKwWgACj9PZTcAAB4NfFQABD+fwyKZvSXu7/B7gIy+wMYAAAAAABlxjDE0Rju03BstPjxXbjZFWjmYuiySsy6pzirF8RF2ki+85hcjMkDi5OZCS18LW0wPS0gMoV8/UTplfjJ9nC6HqCtcczUlNj0TI0JgeTRRZzdEWD4lMUxRWGoIh1cOdFIMNUMNUEkNbVAKmFsMt2VmbHsgZ1AMQkULLkKHpq0FAAAKRElEQVR4nO2dDVfaSBfHQwJJgAmJQBIwEjRFFN94qdrtCmrFd8u6at2qrd//azwzeSEhEwnP2dPiZuZ3TlsJpA3/c++dO/fOTBmGQqFQKBQKhUKhUCgUCoVCoVAoFEqSkYGmtra5CLZVVZPn/XjvBhVJkv5ycXu5d3XdP9jZGQxWV1cHg52ddr9/dbR3s7E/SnPzfsr3AXfTXj1OZSD5aNBbmTZVC6JeIJFSMeRHYN4P+g4A5VSsUqlUZo8aFozr6U8zaJX/lJ73g74HuH4mXqtU5g9t3g/6DuA+z6JV/po6IcNoKzP4YCp/mKZ51owBK5XZUOf9pO8A7nomJ9yhTggzrD9n0SqV8ic7HLEmJqcPZ3LCy7Fhcf3b1jyfeI5w7Zmiu59iafuZlEZmIr8dkTVETQy/eikWGg7yq0Rmp3ILlyp1eLw62Gm3D/rX/X7/oN0erB5f+U64B9XNXJEY7bmdsBNmPqejylneDWBk35C5IC/ItzbCTpjvT7cZbmCLlT/kSMtQ8ZEwfzw9TW95IS5PXGWL62NOOH2uDNX13XX7dz3mu0D7I+yEmaMYJwyqqxLliNicMK5gpe4H1CVr/rN9iUX3LzFOeBxUN3NDjiPK6ZBU8U54FFKXnBGRu8ZHwqk3gC/hG4gZEcEXLLrvT68acwfYHX8SkppiuXtcOsoAJuy3cVlZUtAuwmYSzsn1opTLSWbgIj7pJmSOyK2GDCvz18TYBnhjudHrNZaLvF+OwWeSRHRd1fCkMJRi8Us91qW3lPOuytuYI5KQbGH56GR0L1lsAKvkXd++wRzxIvG9RDUcfSazALHOTlAXvcjlFh3etMgkMpmKh2OP2GND9ET3LYC1GDM3CS/Iq7dhwwo2m83lsFYsu2y6b3JX4VuT3nvlsBl0K/CFs7hWLOs5Il4Cy1wmeoqIdQrzwXTJ7EaJ1fVMCx9Hk21aWI41MSPm61Fi1fk3787sJdm08CFNDob3KK2gH3rvYyXDZNfjsalO/sB3Q1mIFkvwu/cHWNRK8oCIe9K4h8roTLRY8A0XtxsW0DqmtvPfBg/SA9+0pGixJP92rBKWuU1yqQbLHQKVKbETpVVH9O+WucmbU/nVJM8Q8azU96Qclr8jejn/bsBgc54kixUxkR6v2i6+RIn1UvRvxtqNCV8UiEWtVGqcxJci/LBT8u8FK9PLO8kDGxD99KG4gIu1EDSs8IquhBtWVFnZXxiTtcJaWXzgTiwpTbphRaXxfveh1JjUqlEK3oglaUk3LGggeCvMn06LE5PpbiBtiC1IJxMstQzm8UJxbFwNQwjcFVGiSX5hOap9H7QRXSoNu5bVHZYkPXgX1sIPJv8JZvuv6SuOgCkIZqjTheWjxOx+SmN1rdhvjvexD4gwLBjjv2JrjmKWeuC7MSZKYYkG7z5MbzBHrEElo3+PCH/5uG292JaoZBdJQ6gTeXxcEW9ilaSj7uck10jDTOz3jV2qjLVmydqWEhQgblsvvi8xkMUSge+Icf0/9W9sJCQnuruMR8TMxtT4EzESJru7GoW3QzpmpZUcsSWKlBWlATRnEXK+PE6xIjaFpdP4onlScvcJODRHDKRY3HXq+JNzvpFz1NHx8WE+g2lFUooVgGvnQ9t6wxtZUzgxIS6xwNgd3NYbzqYiIdMJEeq+n2LZ23rjtSLUCRFaeFtvHCRu+8XB+hjRWhGXjkbRCvf1o52QhB5FLIFtvVMhYV9FLPim6Ugn3EjyushZ0bCCVaRW9NAxZtYUi7Ai1lvMlGLlD1s0YEVtNcGVyucz+zTDYtAE+jA//QTc1PGgv0EDlg3HpVtf/769PLq67rd30MnKNoOddv/q6HJjX0VH+lC7GvP2qd0temg3hUKhUCgUCoVCoSQPXRDGuwFMQQDeVXQQVFEOXhTsH4DgYk78HURMGPWaZVnu9za7lrWAhNGzd5Ver9d4ycn+RQF+cAmAoeVSGaslyZY1IkEtsMSyrLvZCx3lUIFmBozxLlZe9i7aZxcsGP6hK+4OYFmwd4/V9Lf/jcQQIZY+Gu9tqvNjBZlSpFiye7IIqWKJJ/BS72V4361DV4sQ66S2hLDlAfcsyWLZm6OXxSIwzJzJRIn14SPP8+7GJxl6p9UhViwJBqwPm+i1DIogSqxOA0b/ijuGmpXRR3LFQr830FkXsjxcvgdvxazxET6mLpLrhuj3HroiWN5LW6xNXyy0Lz9wwgPBYiGN2KzuiYUOw2hkYe4F4OUhcGKWKIqB0zDIEmtXQrhi6TXkZNmcUKrY2lWQSGJuF52nlZVtsZzPj9NQssRq2Eiux0n2EQWNSqNja2egVz30AoUyJ8AjeuNTcckSy0H0wpNo+TvuTcYcn7NygmY//rGJ4wOPiBaL4e+dM+zqC0gQaWi/6lgokBXfEOuOBLEY3Sg6GNBsJMmwfcvgs0vDuyxv2B8BPL80rIlOYmVIHv7UWcrliNAKpVMuzivvKgB6oJAAX/3+J6NQKBQK5TcgB/4goYb+LzB4pycj53gZ8NP7M1XFJbQ8UtPKv+4B3xEwF3dqUjABzy5MHKqJUV0suGxNqKWd/vhJhFrFl/9HrPX1KLGU58IDEUtxw2LxQo6XnHaqLvCo/M7IkqnbzVRoWc3yCgL1B8vQKdVytSqr1WbhoVot21eUaoJtLCzWbqVXb9j/X4wwsuq9bhbIo0a31kDNVCSW4k2KqmuLzfNvrw+LzBY0uObi05m68nDebC4+JtfIQmLVnTNcrSwjOYWFzsiosR+cYjsSq2pTZpRvtj9Ct5TPC+vIPU8f3YD2T2KPWQmJxbIvvFlh2W7unmWXs0yDPSnVUJVmCdhiPS/anLVOYeA6O21CtUbft9bXz7ceHp8Kz6/aY7PwrMz7S/0qfLE6tlhLgqxnuyz7sc4u7Ob4jz32hWFZsYjCmB/gv8Mw9aOqqUpzvbBixyylqpwXns+U6uu3reRa1vKEWHW7G78JRWNZ1Bfs1dkGYD84CxqQZX3bQvwcOfaj/igUVmSlWViswgQCydhcPKvO79v8YpBlZdEPm4HUAQp377S62E4HiWV/wolZKkJbgz/BK9qZLxZTPTu3De8psW4I7li2BAe34tAWq7MroxofdLwOu1kSRXF3M1cLiqWUEbJSKLwaMMN6cMV6UMrySFaUte9QsLPEZg/iCcwXJD534gT4xq4kbdbZ+q4FfwnCZuXFnBDrdQ3xqkCPfFSUHzDAQ7GeC+ePa2oTSqlUV5I8HIKhvWwBuZw9Gp5YqN81AvwJe1Kp1NnOhGV5GXwVSlN4Xi84Yj2h66c/4ZVzaFgwF5vzd/p1mEO0uKhz78Ssit3PGRmMLtkC9kxQY088sdZdttSy9oTCOcy2XuXy6BwOk6fKP007ZCV6+R8Q7xaWRNMwdKOUk/jhPcOjvoSck4b3Qk5n9Kw3YQxWHWRFO3tVVEWBAaqMrmmMpjA/19QE25WNbgDU33FeAMNr4cgATCtyyWUskMNLCZeKQqFQKBQKhUKhUCgUCoVCoVAoFGL4H0FhJVCAL69OAAAAAElFTkSuQmCC"
+                        width="112" height="50">
+                </a>
+        
+                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+            </div>
+        
+            <div id="navbarBasicExample" class="navbar-menu">
+                <div class="navbar-start">
+                    <a class="navbar-item " href="/players">
+                        Players
+                    </a>
+        
+                    <a class="navbar-item" href="/nations">
+                        Nations
+                    </a>
+                </div>
+                
+            </div>
+            <div class="navbar-end">
+                <button class="js-modal-trigger is-primary button is-primarys mt-1" data-target="modal-js-example">
+                    Create
+                </button>
+            </div>
+        </nav>
+        <div id="modal-js-example" class="modal">
+            <div class="modal-background"></div>
+            <div class="modal-content">
+                <div class="box">
+                    <p>Create New Player</p>
+                    <div class="column">
+                        <form method="post" class="box">
+                            <div class="field">
+                                <label class="label">Name</label>
+                                <div class="control">
+                                    <input class="input is-info" type="text" name="name" placeholder="Text input" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Image</label>
+                                <div class="control">
+                                    <input class="input is-info" type="text" name="image" placeholder="URL of image" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Goal</label>
+                                <div class="control">
+                                    <input class="input is-info" type="text" name="goal" placeholder="Text input" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Club</label>
+                                <div class="field">
+                                    <div class=" select is-fullwidth">
+                                        <select name="club">
+                                            <% for(let club of clubList){%>
+                                                <option value="<%= club.name%>">
+                                                    <%= club.name%>
+                                                </option>
+                                                <%}%>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Loca</label>
+                                <div class="field">
+                                    <div class=" select is-fullwidth">
+                                        <select name="loca">
+                                            <% for(let loca of locaList){%>
+                                                <option value="<%= loca.name%>">
+                                                    <%= loca.name%>
+                                                </option>
+                                                <%}%>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="control">
+                                    <button class="button is-primary" type="submit">Create</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        
+            <button class="modal-close is-large" aria-label="close"></button>
+        </div>
         <div class="columns is-desktop">
-            <div class="column">
-                <table class="table is-hoverable">
+            <div class="column players-table">
+                <!-- <table class="table is-hoverable is-fullwidth">
                     <tbody>
                         <thead>
                             <tr>
@@ -90,7 +139,7 @@
                             <a href="#" class="mt-2">
                                 <tr>
                                     <td>
-                                        <figure class="image is-3by4">
+                                        <figure class="image is-3by3">
                                             <img src=<%=player.image %>>
                                         </figure>
 
@@ -105,53 +154,114 @@
                                         <div class="buttons are-small">
                                             <a class="button is-warning is-light"
                                                 href="/players/edit/<%= player._id%>">Edit</a>
-                                            <a class="button is-danger is-light"
-                                                href="/players/delete/<%= player._id%>">Delete</a>
+                                            <a class="button is-danger is-small" href="/players/delete/<%= player._id %>"
+                                                onclick="return confirm('Are you sure you want to delete this player?')">Delete</a>
+
                                         </div>
                                     </td>
                                 </tr>
                             </a>
                             <%})%>
                     </tbody>
-                </table>
-            </div>
-            <div class="column">
-                <form method="post" class="box">
-                    <div class="field">
-                        <label class="label">Name</label>
-                        <div class="control">
-                            <input class="input is-info" type="text" name="name" placeholder="Text input">
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label class="label">Image</label>
-                        <div class="control">
-                            <input class="input is-info" type="text" name="image" placeholder="URL of image">
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label class="label">Club</label>
-                        <div class="field">
-                            <div class=" select is-fullwidth">
-                                <select name="club">
-                                    <% for(let club of clubList){%>
-                                        <option value="<%= club.name%>">
-                                            <%= club.name%>
-                                        </option>
-                                        <%}%>
-                                </select>
+                </table> -->
+                <div class="columns is-multiline">
+                    <% players.forEach(function(player) { %>
+                        <div class="column is-one-quarter">
+                            <div class="card">
+                                <div class="card-image">
+                                    <figure class="image is-4by5">
+                                        <img class="pl-2 pr-2 pt-2 img-avt" src="<%= player.image %>">
+                                    </figure>
+                                </div>
+                                <div class="card-content">
+                                    <div class="content">
+                                        <h4 class="playername">
+                                            <%= player.name %>
+                                        </h4>
+                                        <p>
+                                            <%= player.club %>
+                                        </p>
+                                        <p>
+                                            <%= player.goal %>
+                                        </p>
+                                        <p>
+                                            <%= player.loca %>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="navbar-item has-dropdown is-hoverable">
+                                        <a class="navbar-link ">
+                                            Actions
+                                        </a>
+                                        <div class="navbar-dropdown">
+                                            <a class="button is-warning is-light is-fullwidth mb-1" href="/players/edit/<%= player._id %>">Edit</a>
+                                            <a class="button is-danger is-light is-fullwidth mt-1 mb-1" href="/players/delete/<%= player._id %>"
+                                                onclick="return confirm('Are you sure you want to delete this player?')">Delete</a>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="buttons is-centered">
+                                        <a class="button is-warning is-light" href="/players/edit/<%= player._id %>">Edit</a>
+                                        <a class="button is-danger is-light" href="/players/delete/<%= player._id %>"
+                                            onclick="return confirm('Are you sure you want to delete this player?')">Delete</a>      
+                                    </div> -->
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="field">
-                        <div class="control">
-                            <button class="button is-primary" type="submit">Create</button>
-                        </div>
-                    </div>
-                </form>
+                        <% }) %>
+                </div>
+
             </div>
+            
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+                // Functions to open and close a modal
+                function openModal($el) {
+                    $el.classList.add('is-active');
+                }
+
+                function closeModal($el) {
+                    $el.classList.remove('is-active');
+                }
+
+                function closeAllModals() {
+                    (document.querySelectorAll('.modal') || []).forEach(($modal) => {
+                        closeModal($modal);
+                    });
+                }
+
+                // Add a click event on buttons to open a specific modal
+                (document.querySelectorAll('.js-modal-trigger') || []).forEach(($trigger) => {
+                    const modal = $trigger.dataset.target;
+                    const $target = document.getElementById(modal);
+
+                    $trigger.addEventListener('click', () => {
+                        openModal($target);
+                    });
+                });
+
+                // Add a click event on various child elements to close the parent modal
+                (document.querySelectorAll('.modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button') || []).forEach(($close) => {
+                    const $target = $close.closest('.modal');
+
+                    $close.addEventListener('click', () => {
+                        closeModal($target);
+                    });
+                });
+
+                // Add a keyboard event to close all modals
+                document.addEventListener('keydown', (event) => {
+                    const e = event || window.event;
+
+                    if (e.keyCode === 27) { // Escape key
+                        closeAllModals();
+                    }
+                });
+            });
+
+    </script>
 </body>
 
 </html>

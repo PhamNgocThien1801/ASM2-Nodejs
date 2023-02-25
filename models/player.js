@@ -16,6 +16,14 @@ const playerSchema = new Schema(
       type: String,
       require: true,
     },
+    goal: {
+      type: String,
+      required: true,
+    },
+    loca: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,

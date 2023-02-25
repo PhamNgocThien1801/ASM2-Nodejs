@@ -12,10 +12,6 @@ const nationSchema = new Schema(
       type: String,
       require: true,
     },
-    // club: {
-    //   type: String,
-    //   require: true,
-    // },
   },
   {
     timestamps: true,

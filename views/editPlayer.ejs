@@ -31,6 +31,12 @@
                         </div>
                     </div>
                     <div class="field">
+                        <label class="label">Goal</label>
+                        <div class="control">
+                            <input class="input is-info" type="text" name="goal" value="<%= player.goal%>">
+                        </div>
+                    </div>
+                    <div class="field">
                         <label class="label">Club</label>
                         <div class="field">
                             <div class=" select is-fullwidth">
@@ -39,6 +45,21 @@
                                         <option value="<%= club.name%>"
                                             <%=JSON.stringify(club.name)===JSON.stringify(player.club)?'selected':''%>>
                                             <%= club.name%>
+                                        </option>
+                                        <%}%>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">loca</label>
+                        <div class="field">
+                            <div class=" select is-fullwidth">
+                                <select name="loca">
+                                    <% for(let loca of locaList){%>
+                                        <option value="<%= loca.name%>"
+                                            <%=JSON.stringify(loca.name)===JSON.stringify(player.loca)?'selected':''%>>
+                                            <%= loca.name%>
                                         </option>
                                         <%}%>
                                 </select>
