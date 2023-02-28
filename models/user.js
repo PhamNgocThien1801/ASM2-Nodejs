@@ -21,6 +21,7 @@ var userSchema = new Schema(
       require: true,
     },
     isAdmin: Boolean,
+    default: false,
   },
   {
     timestamps: true,

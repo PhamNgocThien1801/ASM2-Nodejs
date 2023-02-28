@@ -1,0 +1,53 @@
+.sign-in {
+    text-decoration: none;
+    color: black;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.sign-up {
+    color: red;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.form {
+    align-items: center;
+}
+
+.choose-form {
+    display: flex;
+}
+
+.active {
+    background-color: #36a96d;
+    border-radius: 5px;
+    padding: 10px 25px;
+    border: 1px solid black;
+}
+
+.active a:hover {
+    color: #fff;
+}
+
+.active:hover {
+    text-decoration: none;
+    background-color: #36a96d;
+    color: #fff;
+}
+
+.non-active {
+    padding: 10px 25px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.non-active:hover {
+    text-decoration: none;
+}
+
+.login-btn {
+    width: full;
+}

@@ -24,6 +24,10 @@ const playerSchema = new Schema(
       type: String,
       required: true,
     },
+    isCaptain: {
+      type: String,
+      require: true,
+    },
   },
   {
     timestamps: true,

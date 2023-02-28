@@ -5,6 +5,8 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var session = require("express-session");
 var FileStore = require("session-file-store")(session);
+const passport = require("passport");
+const flash = require("connect-flash");
 
 const mongoose = require("mongoose");
 const Players = require("./models/player");
@@ -13,16 +15,30 @@ const url = "mongodb://127.0.0.1:27017/worldcup2022";
 mongoose.set("strictQuery", true);
 const connect = mongoose.connect(url);
 
-var indexRouter = require("./routes/index");
+// var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/usersRouter");
 const playerRouter = require("./routes/playerRouter");
-const playerController = require("./controllers/playerController");
 const nationRouter = require("./routes/nationRouter");
-const nationController = require("./controllers/nationController");
 
 var app = express();
-var session = require("express-session");
-var FileStore = require("session-file-store")(session);
+require("./config/passport")(passport);
+app.use(
+  session({
+    secret: "secret",
+    resave: true,
+    saveUninitialized: true,
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
+app.use(function (req, res, next) {
+  res.locals.success_msg = req.flash("success_msg");
+  res.locals.error_msg = req.flash("error_msg");
+  res.locals.error = req.flash("error");
+  next();
+});
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -46,9 +62,9 @@ app.use(
   })
 );
 
-app.use("/", indexRouter);
+// app.use("/", indexRouter);
 // app.use("/users", usersRouter);
-app.use("/players", playerRouter);
+app.use("/", playerRouter);
 app.use("/nations", nationRouter);
 app.use("/auth", usersRouter);
 

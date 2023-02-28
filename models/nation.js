@@ -12,6 +12,10 @@ const nationSchema = new Schema(
       type: String,
       require: true,
     },
+    description: {
+      type: String,
+      require: true,
+    },
   },
   {
     timestamps: true,

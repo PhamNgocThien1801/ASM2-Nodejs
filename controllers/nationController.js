@@ -1,15 +1,5 @@
 const Nations = require("../models/nation");
 
-// let clubData = [
-//   { id: "1", name: "Arsenal" },
-//   { id: "2", name: "Manchester United" },
-//   { id: "3", name: "Chelsea" },
-//   { id: "4", name: "Manchester City" },
-//   { id: "5", name: "PSG" },
-//   { id: "6", name: "Inter Milan" },
-//   { id: "7", name: "Real Madrid" },
-//   { id: "8", name: "Barcelona" },
-// ];
 class nationController {
   index(req, res, next) {
     Nations.find({})

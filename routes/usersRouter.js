@@ -4,6 +4,7 @@ const userController = require("../controllers/userController");
 const userRouter = express.Router();
 const bodyParser = require("body-parser");
 const { notAuthenticated } = require("../config/notAuth");
+var { ensureAuthenticated } = require("../config/auth");
 
 userRouter
   .route("/")
@@ -18,4 +19,16 @@ userRouter
   .post(notAuthenticated, userController.register);
 
 module.exports = userRouter;
-// router.use(bodyParser.json());
+
+userRouter.route("/account").get(ensureAuthenticated, userController.account);
+
+userRouter
+  .route("/account/edit/:accountID")
+  .get(ensureAuthenticated, userController.editAccount)
+  .post(ensureAuthenticated, userController.updateAccount);
+
+userRouter
+  .route("/account/listUser")
+  .get(ensureAuthenticated, userController.listUser);
+
+module.exports = userRouter;

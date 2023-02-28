@@ -19,6 +19,10 @@ let locaData = [
   { id: "6", name: "LB" },
   { id: "7", name: "GK" },
 ];
+let isCaptain = [
+  { id: "1", name: "Captain" },
+  { id: "2", name: "Not Captain" },
+];
 class playerController {
   index(req, res, next) {
     Players.find({})
@@ -28,6 +32,7 @@ class playerController {
           players: players,
           clubList: clubData,
           locaList: locaData,
+          isCaptainList: isCaptain,
         });
       })
       .catch(next);
@@ -37,7 +42,7 @@ class playerController {
     const player = new Players(req.body);
     player
       .save()
-      .then(() => res.redirect("/players"))
+      .then(() => res.redirect("/"))
       .catch((err) => {
         console.log(err);
       });
@@ -52,6 +57,7 @@ class playerController {
           player: player,
           clubList: clubData,
           locaList: locaData,
+          isCaptainList: isCaptain,
         });
       })
       .catch(next);
@@ -60,7 +66,7 @@ class playerController {
     const playerID = req.params.id;
     Players.updateOne({ _id: playerID }, req.body)
       .then(() => {
-        res.redirect("/players");
+        res.redirect("/");
       })
       .catch(next);
   }
@@ -79,7 +85,7 @@ class playerController {
     }
     Players.findByIdAndDelete({ _id: playerID })
       .then(() => {
-        res.redirect("/players");
+        res.redirect("/");
       })
       .catch(next);
   }

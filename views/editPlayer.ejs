@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>
         <%=title%>
     </title>
@@ -13,34 +14,62 @@
 
 <body>
     <div class="container">
-        <div class="columns is-desktop">
+        <%- include('../views/navbar/navbar.ejs') %>
+
+        <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Players</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/nations">Nations</a>
+                    </li>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                        Create
+                    </button>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    <button class="ml-3 btn btn-danger" type="submit"><a href="/auth/logout">logout</a></button>
+                </form>
+            </div>
+        </nav> -->
+        <div class="columns">
             <div class="column">
                 <form method="post" class="box">
                     <div class="field">
                         <label class="label">Name</label>
                         <div class="control">
-                            <input class="input is-info" type="text" name="name" placeholder="Text input"
+                            <input class="input form-control" type="text" name="name" placeholder="Text input"
                                 value="<%= player.name%>">
                         </div>
                     </div>
-                    <div class="field">
+                    <div class="field mt-3">
                         <label class="label">Image</label>
                         <div class="control">
-                            <input class="input is-info" type="text" name="image" placeholder="URL of image"
+                            <input class="input form-control" type="text" name="image" placeholder="URL of image"
                                 value="<%= player.image%>">
                         </div>
                     </div>
-                    <div class="field">
+                    <div class="field mt-3">
                         <label class="label">Goal</label>
                         <div class="control">
-                            <input class="input is-info" type="text" name="goal" value="<%= player.goal%>">
+                            <input class="input form-control" type="text" name="goal" value="<%= player.goal%>">
                         </div>
                     </div>
-                    <div class="field">
+                    <div class="field mt-3">
                         <label class="label">Club</label>
                         <div class="field">
                             <div class=" select is-fullwidth">
-                                <select name="club">
+                                <select name="club" class="form-control">
                                     <% for(let club of clubList){%>
                                         <option value="<%= club.name%>"
                                             <%=JSON.stringify(club.name)===JSON.stringify(player.club)?'selected':''%>>
@@ -51,11 +80,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="field">
-                        <label class="label">loca</label>
+                    <div class="field mt-3">
+                        <label class="label">Position</label>
                         <div class="field">
                             <div class=" select is-fullwidth">
-                                <select name="loca">
+                                <select name="loca" class="form-control">
                                     <% for(let loca of locaList){%>
                                         <option value="<%= loca.name%>"
                                             <%=JSON.stringify(loca.name)===JSON.stringify(player.loca)?'selected':''%>>
@@ -66,15 +95,40 @@
                             </div>
                         </div>
                     </div>
-                    <div class="field">
+                    <div class="field mt-3">
+                        <label class="label">Iscaption</label>
+                        <div class="field">
+                            <div class=" select is-fullwidth">
+                                <select name="isCaptain" class="form-control">
+                                    <% for(let captain of isCaptainList){ %>
+                                        <option value="<%=captain.name%>" <%=JSON.stringify(captain.name)===JSON.stringify(player.isCaptain)? 'selected'
+                                            : '' %>>
+                                            <%= captain.name%>
+                                        </option>
+                                        <% } %>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field mt-3">
                         <div class="control">
-                            <button class="button is-primary" type="submit">Create</button>
+                            <button class="button btn btn-primary" type="submit">Edit Player</button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+        </script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
 </body>
 
 </html>
