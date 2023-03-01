@@ -15,25 +15,34 @@
     <div class="container">
         <%- include('../views/navbar/navbar.ejs') %>
         <div class="columns">
+            <div class="alert-group">
+                <% if(typeof errors!='undefined' ){%>
+                    <% errors.forEach(function(error){%>
+                        <div class="alert alert-danger alert-dismissible" role="alert">
+                            <%= error.msg %>
+                        </div>
+                    <% }); %>
+                <% } %>
+            </div>
             <div class="column">
                 <form method="post" class="box">
                     <div class="field">
                         <label class="label">Name</label>
                         <div class="control">
-                            <input class="input form-control" type="text" name="name" placeholder="Text input"
+                            <input class="input form-control" type="text" name="name" placeholder="Text input" required
                                 value="<%= user.name%>">
                         </div>
                     </div>
                     <div class="field">
                         <label class="label">UserName</label>
                         <div class="control">
-                            <input class="input form-control" type="text" name="username" placeholder="Text input" value="<%= user.username%>">
+                            <input class="input form-control" type="text" name="username" placeholder="Text input" value="<%= user.username%>" readonly>
                         </div>
                     </div>
                     <div class="field">
                         <label class="label">Year of Birth</label>
                         <div class="control">
-                            <input class="input form-control" type="text" name="yob" placeholder="Text input"
+                            <input class="input form-control" type="number" name="yob" placeholder="input Year of birth" required
                                 value="<%= user.yob%>">
                         </div>
                     </div>

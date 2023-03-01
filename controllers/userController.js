@@ -109,7 +109,7 @@ class userController {
   editAccount(req, res, next) {
     var userID = req.params.accountID;
     User.findById(userID).then((user) => {
-      res.render("editAccount", {
+      res.render("editUser", {
         title: "Edit Account",
         user: user,
       });
