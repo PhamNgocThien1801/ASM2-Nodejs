@@ -23,6 +23,11 @@
                                 <div class="control">
                                     <button class="button btn btn-primary" type="submit"><a href="/auth/account/edit/<%= user.id%>">Edit user</a></button>
                                 </div>
+                                <% if(showListUser) {%>
+                                    <div class="control">
+                                        <button class="button btn btn-primary" type="submit"><a href="/auth/account/listUser">List user</a></button>
+                                    </div>                                                    
+                                <%}%>
                             </div>
                         </div>
                     </div>
@@ -55,8 +60,20 @@
                                         <p class="text-muted mb-0"><%= user.yob%></p>
                                     </div>
                                 </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p class="mb-0">Is Admin</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <p class="text-muted mb-0">
+                                            <%=JSON.stringify(user.isAdmin)===JSON.stringify(true)? 'Yes' : 'No' %>
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                        
                     </div>
                 </div>
             </div>

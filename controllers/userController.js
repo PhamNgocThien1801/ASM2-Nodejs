@@ -95,9 +95,6 @@ class userController {
   account(req, res, next) {
     var userID = req.user._id;
     var showListUser = false;
-    if (checkIsAdmin(req.user.isAdmin)) {
-      showListUser = true;
-    }
     User.findById(userID).then((user) => {
       res.render("user", {
         title: "Account Page",
@@ -105,6 +102,9 @@ class userController {
         showListUser: showListUser,
       });
     });
+    if (checkIsAdmin(req.user.isAdmin)) {
+      showListUser = true;
+    }
   }
   editAccount(req, res, next) {
     var userID = req.params.accountID;
