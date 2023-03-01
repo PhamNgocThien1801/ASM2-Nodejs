@@ -28,9 +28,11 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="/nations">Nations</a>
                             </li>
+                            <% if(checkAdmin) {%>
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                                 Create
                             </button>
+                            <%}%>
                         </ul>
                         <form class="form-inline my-2 my-lg-0">
                             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
@@ -50,6 +52,7 @@
                                     </li>
                                 </ul>
                             </div>
+                            <button class="btn btn-outline-success ml-1" type="button"><a href="/auth">Login</a></button>
                         </form>
                     </div>
                 </nav>

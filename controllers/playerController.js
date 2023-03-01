@@ -1,4 +1,5 @@
 const Players = require("../models/player");
+const checkIsAdmin = require("../config/checkIsAdmin");
 
 let clubData = [
   { id: "1", name: "Arsenal" },
@@ -23,8 +24,29 @@ let isCaptain = [
   { id: "1", name: "Captain" },
   { id: "2", name: "Not Captain" },
 ];
+
 class playerController {
+  // account(req, res, next) {
+  //   var userID = req.user._id;
+  //   var showListUser = false;
+  //   User.findById(userID).then((user) => {
+  //     res.render("user", {
+  //       title: "Account Page",
+  //       user: user,
+  //       showListUser: showListUser,
+  //     });
+  //   });
+  //   // if (checkIsAdmin(req.user.isAdmin)) {
+  //   //   showListUser = true;
+  //   // }
+  // }
+
   index(req, res, next) {
+    var checkAdmin = false;
+
+    if (req.user && checkIsAdmin(req.user.isAdmin)) {
+      checkAdmin = true;
+    }
     Players.find({})
       .then((players) => {
         res.render("player", {
@@ -33,12 +55,18 @@ class playerController {
           clubList: clubData,
           locaList: locaData,
           isCaptainList: isCaptain,
+          checkAdmin: checkAdmin,
         });
       })
       .catch(next);
     console.log(req.body);
   }
   create(req, res, next) {
+    var checkAdmin = false;
+
+    if (req.user && checkIsAdmin(req.user.isAdmin)) {
+      checkAdmin = true;
+    }
     const player = new Players(req.body);
     player
       .save()
@@ -49,6 +77,11 @@ class playerController {
   }
 
   edit(req, res, next) {
+    var checkAdmin = false;
+
+    if (req.user && checkIsAdmin(req.user.isAdmin)) {
+      checkAdmin = true;
+    }
     const playerID = req.params.id;
     Players.findById(playerID)
       .then((player) => {
@@ -58,11 +91,17 @@ class playerController {
           clubList: clubData,
           locaList: locaData,
           isCaptainList: isCaptain,
+          checkAdmin: checkAdmin,
         });
       })
       .catch(next);
   }
   update(req, res, next) {
+    var checkAdmin = false;
+
+    if (req.user && checkIsAdmin(req.user.isAdmin)) {
+      checkAdmin = true;
+    }
     const playerID = req.params.id;
     Players.updateOne({ _id: playerID }, req.body)
       .then(() => {
@@ -70,15 +109,11 @@ class playerController {
       })
       .catch(next);
   }
-  // delete(res, req, next) {
-  //   const playerID = req.params.id;
-  //   Players.findByIdAndDelete({ _id: playerID })
-  //     .then(() => {
-  //       res.redirect("/players");
-  //     })
-  //     .catch(next);
-  // }
   delete(req, res, next) {
+    var checkAdmin = false;
+    if (req.user && checkIsAdmin(req.user.isAdmin)) {
+      checkAdmin = true;
+    }
     const playerID = req.params.id;
     if (!playerID) {
       return next(new Error("No player ID provided"));

@@ -20,8 +20,10 @@ var userSchema = new Schema(
       type: Number,
       require: true,
     },
-    isAdmin: Boolean,
-    default: false,
+    isAdmin: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

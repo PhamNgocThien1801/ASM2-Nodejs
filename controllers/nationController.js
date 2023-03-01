@@ -1,13 +1,23 @@
 const Nations = require("../models/nation");
+const checkIsAdmin = require("../config/checkIsAdmin");
 
 class nationController {
   index(req, res, next) {
+    // var showListUser = false;
+    // if (checkIsAdmin(req.user.isAdmin)) {
+    //   showListUser = true;
+    // }
+    var checkAdmin = false;
+    if (req.user && checkIsAdmin(req.user.isAdmin)) {
+      checkAdmin = true;
+    }
     Nations.find({})
       .then((nations) => {
         res.render("nation", {
           title: "The list of nations",
           nations: nations,
-          //   clubList: clubData,
+          checkAdmin: checkAdmin,
+          // showListUser: showListUser:
         });
       })
       .catch(next);
@@ -15,6 +25,10 @@ class nationController {
   }
   create(req, res, next) {
     const nation = new Nations(req.body);
+    var checkAdmin = false;
+    if (req.user && checkIsAdmin(req.user.isAdmin)) {
+      checkAdmin = true;
+    }
     nation
       .save()
       .then(() => res.redirect("/nations"))
@@ -25,34 +39,35 @@ class nationController {
 
   edit(req, res, next) {
     const nationID = req.params.id;
+    var checkAdmin = false;
+    if (req.user && checkIsAdmin(req.user.isAdmin)) {
+      checkAdmin = true;
+    }
     Nations.findById(nationID)
       .then((nation) => {
         res.render("editnation", {
           title: "The detail of nation",
           nation: nation,
-          //   clubList: clubData,
+          checkAdmin: checkAdmin,
         });
       })
       .catch(next);
   }
   update(req, res, next) {
     const nationID = req.params.id;
+
     Nations.updateOne({ _id: nationID }, req.body)
       .then(() => {
         res.redirect("/nations");
       })
       .catch(next);
   }
-  // delete(res, req, next) {
-  //   const nationID = req.params.id;
-  //   nations.findByIdAndDelete({ _id: nationID })
-  //     .then(() => {
-  //       res.redirect("/nations");
-  //     })
-  //     .catch(next);
-  // }
   delete(req, res, next) {
     const nationID = req.params.id;
+    var checkAdmin = false;
+    if (req.user && checkIsAdmin(req.user.isAdmin)) {
+      checkAdmin = true;
+    }
     if (!nationID) {
       return next(new Error("No nation ID provided"));
     }

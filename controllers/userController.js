@@ -12,6 +12,7 @@ class userController {
       title: "Register Page",
     });
   }
+
   register(req, res, next) {
     console.log(req.body);
     const { name, yob, username, password } = req.body;
@@ -95,11 +96,17 @@ class userController {
   account(req, res, next) {
     var userID = req.user._id;
     var showListUser = false;
+    var checkAdmin = false;
+
+    if (req.user && checkIsAdmin(req.user.isAdmin)) {
+      checkAdmin = true;
+    }
     User.findById(userID).then((user) => {
       res.render("user", {
         title: "Account Page",
         user: user,
         showListUser: showListUser,
+        checkAdmin: checkAdmin,
       });
     });
     if (checkIsAdmin(req.user.isAdmin)) {
@@ -108,15 +115,25 @@ class userController {
   }
   editAccount(req, res, next) {
     var userID = req.params.accountID;
+    var checkAdmin = false;
+    if (req.user && checkIsAdmin(req.user.isAdmin)) {
+      checkAdmin = true;
+    }
     User.findById(userID).then((user) => {
       res.render("editUser", {
         title: "Edit Account",
         user: user,
+        checkAdmin: checkAdmin,
       });
     });
   }
   updateAccount(req, res, next) {
     var userID = req.params.accountID;
+    var checkAdmin = false;
+
+    if (req.user && checkIsAdmin(req.user.isAdmin)) {
+      checkAdmin = true;
+    }
     User.updateOne({ _id: userID }, req.body).then(() => {
       res.redirect("/auth/account");
     });
