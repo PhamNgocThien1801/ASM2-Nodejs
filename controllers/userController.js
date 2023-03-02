@@ -139,11 +139,16 @@ class userController {
     });
   }
   listUser(req, res, next) {
+    var checkAdmin = false;
+    if (req.user && checkIsAdmin(req.user.isAdmin)) {
+      checkAdmin = true;
+    }
     if (checkIsAdmin(req.user.isAdmin)) {
       User.find({}).then((user) => {
         res.render("listUser", {
           title: "List User",
           user: user,
+          checkAdmin: checkAdmin,
         });
       });
     } else {

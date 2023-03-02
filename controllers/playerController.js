@@ -61,9 +61,23 @@ class playerController {
       .catch(next);
     console.log(req.body);
   }
+  // create(req, res, next) {
+  //   var checkAdmin = false;
+
+  //   if (req.user && checkIsAdmin(req.user.isAdmin)) {
+  //     checkAdmin = true;
+  //   }
+  //   const player = new Players(req.body);
+  //   player
+  //     .save()
+  //     .then(() => res.redirect("/"))
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }
+
   create(req, res, next) {
     var checkAdmin = false;
-
     if (req.user && checkIsAdmin(req.user.isAdmin)) {
       checkAdmin = true;
     }
@@ -72,13 +86,21 @@ class playerController {
       .save()
       .then(() => res.redirect("/"))
       .catch((err) => {
+        if (err.code === 11000) {
+          // Duplicate key error, return error message to user
+          req.flash("error", "Name already exists");
+          res.redirect("/");
+        } else {
+          // Other error, log and return generic error message to user
+          console.log(err);
+          res.status(500).send("Error creating player");
+        }
         console.log(err);
       });
   }
 
   edit(req, res, next) {
     var checkAdmin = false;
-
     if (req.user && checkIsAdmin(req.user.isAdmin)) {
       checkAdmin = true;
     }
@@ -94,11 +116,21 @@ class playerController {
           checkAdmin: checkAdmin,
         });
       })
-      .catch(next);
+      .catch((err) => {
+        if (err.code === 11000) {
+          // Duplicate key error, return error message to user
+          req.flash("error", "Name already exists");
+          res.redirect("/");
+        } else {
+          // Other error, log and return generic error message to user
+          console.log(err);
+          res.status(500).send("Error creating player");
+        }
+        console.log(err);
+      });
   }
   update(req, res, next) {
     var checkAdmin = false;
-
     if (req.user && checkIsAdmin(req.user.isAdmin)) {
       checkAdmin = true;
     }
@@ -107,7 +139,18 @@ class playerController {
       .then(() => {
         res.redirect("/");
       })
-      .catch(next);
+      .catch((err) => {
+        if (err.code === 11000) {
+          // Duplicate key error, return error message to user
+          req.flash("error", "Name already exists");
+          res.redirect("/");
+        } else {
+          // Other error, log and return generic error message to user
+          console.log(err);
+          res.status(500).send("Error creating player");
+        }
+        console.log(err);
+      });
   }
   delete(req, res, next) {
     var checkAdmin = false;

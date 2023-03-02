@@ -48,19 +48,19 @@ app.set("view engine", "ejs");
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+// app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use(cookieParser("12345-67890"));
-app.use(
-  session({
-    name: "session-id",
-    secret: "12345-67890-09876-54321",
-    saveUninitialized: false,
-    resave: false,
-    store: new FileStore(),
-  })
-);
+// app.use(cookieParser("12345-67890"));
+// app.use(
+//   session({
+//     name: "session-id",
+//     secret: "12345-67890-09876-54321",
+//     saveUninitialized: false,
+//     resave: false,
+//     store: new FileStore(),
+//   })
+// );
 
 // app.use("/", indexRouter);
 // app.use("/users", usersRouter);
