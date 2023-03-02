@@ -150,6 +150,7 @@
                                 <%= player.isCaptain%>
                             </p>
                         </div>
+                        <% if(checkAdmin) {%>
                         <div class="card-footer">
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
@@ -163,6 +164,7 @@
                                 </div>
                             </div>
                         </div>
+                        <%}%>
                     </div>
                 </div>
                 <% }) %>
