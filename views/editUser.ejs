@@ -46,13 +46,6 @@
                                 value="<%= user.yob%>">
                         </div>
                     </div>
-                    <div class="field">
-                        <label class="label">Is Admin</label>
-                        <div class="control">
-                            <input class="input form-control" type="text" name="username" placeholder="Text input"
-                                value="<%=JSON.stringify(user.isAdmin)===JSON.stringify(true)? 'Is Admin' : 'Not Admin' %>" readonly>
-                        </div>
-                    </div>
                     <div class="field mt-3">
                         <div class="control">
                             <button class="button btn btn-primary" type="submit">Edit user</button>

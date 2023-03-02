@@ -1,5 +1,6 @@
 const Players = require("../models/player");
 const checkIsAdmin = require("../config/checkIsAdmin");
+const notAuthenticated = require("../config/notAuth");
 
 let clubData = [
   { id: "1", name: "Arsenal" },
@@ -43,7 +44,6 @@ class playerController {
 
   index(req, res, next) {
     var checkAdmin = false;
-
     if (req.user && checkIsAdmin(req.user.isAdmin)) {
       checkAdmin = true;
     }

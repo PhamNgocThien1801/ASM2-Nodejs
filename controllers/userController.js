@@ -119,24 +119,82 @@ class userController {
     if (req.user && checkIsAdmin(req.user.isAdmin)) {
       checkAdmin = true;
     }
-    User.findById(userID).then((user) => {
-      res.render("editUser", {
-        title: "Edit Account",
-        user: user,
-        checkAdmin: checkAdmin,
+    const { name, yob, username, password } = req.body;
+    let age = currentYear - yob;
+    console.log(age);
+    User.findById(userID)
+      .then((user) => {
+        res.render("editUser", {
+          title: "Edit Account",
+          user: user,
+          checkAdmin: checkAdmin,
+        });
+      })
+      .catch((err) => {
+        if (age < 18) {
+          // Duplicate key error, return error message to user
+          req.flash("error", "You must be at least 18 years old");
+          res.redirect("/auth/account");
+        }
+        if (age > 100) {
+          // Duplicate key error, return error message to user
+          req.flash("error", "Year of birth is invalid");
+          res.redirect("/auth/account");
+        } else {
+          // Other error, log and return generic error message to user
+          console.log(err);
+          res.status(500).send("Error creating player");
+        }
+        console.log(err);
       });
-    });
   }
+  // update(req, res, next) {
+  //   var checkAdmin = false;
+  //   if (req.user && checkIsAdmin(req.user.isAdmin)) {
+  //     checkAdmin = true;
+  //   }
+  //   const playerID = req.params.id;
+  //   Players.updateOne({ _id: playerID }, req.body)
+  //     .then(() => {
+  //       res.redirect("/");
+  //     })
+  //     .catch((err) => {
+  //       if (err.code === 11000) {
+  //         // Duplicate key error, return error message to user
+  //         req.flash("error", "Name already exists");
+  //         res.redirect("/");
+  //       } else {
+  //         // Other error, log and return generic error message to user
+  //         console.log(err);
+  //         res.status(500).send("Error creating player");
+  //       }
+  //       console.log(err);
+  //     });
+  // }
   updateAccount(req, res, next) {
     var userID = req.params.accountID;
     var checkAdmin = false;
-
+    const { name, yob, username, password } = req.body;
+    let age = currentYear - yob;
     if (req.user && checkIsAdmin(req.user.isAdmin)) {
       checkAdmin = true;
     }
-    User.updateOne({ _id: userID }, req.body).then(() => {
+    if (age < 18 || age > 100) {
+      req.flash(
+        "error",
+        "Invalid year of birth entered. Please enter a valid year between 1900 and the current year"
+      );
       res.redirect("/auth/account");
-    });
+    } else {
+      User.updateOne({ _id: userID }, req.body)
+        .then(() => {
+          res.redirect("/auth/account");
+        })
+        .catch((err) => {
+          console.log(err);
+          res.status(500).send("Error updating account");
+        });
+    }
   }
   listUser(req, res, next) {
     var checkAdmin = false;

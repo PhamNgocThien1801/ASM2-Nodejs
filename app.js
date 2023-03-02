@@ -39,7 +39,6 @@ app.use(function (req, res, next) {
   res.locals.error = req.flash("error");
   next();
 });
-
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
@@ -48,20 +47,30 @@ app.set("view engine", "ejs");
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-// app.use(cookieParser());
+app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-// app.use(cookieParser("12345-67890"));
-// app.use(
-//   session({
-//     name: "session-id",
-//     secret: "12345-67890-09876-54321",
-//     saveUninitialized: false,
-//     resave: false,
-//     store: new FileStore(),
-//   })
-// );
+app.use(cookieParser("12345-67890"));
+app.use(
+  session({
+    name: "session-id",
+    secret: "12345-67890-09876-54321",
+    saveUninitialized: false,
+    resave: false,
+    store: new FileStore(),
+  })
+);
 
+// Middleware to attach req to app.locals
+app.use(function (req, res, next) {
+  res.locals.req = req;
+  next();
+});
+
+// Route handler to render an EJS file
+app.get("/player", function (req, res) {
+  res.render("player");
+});
 // app.use("/", indexRouter);
 // app.use("/users", usersRouter);
 app.use("/", playerRouter);
