@@ -11,13 +11,14 @@ class nationController {
     if (req.user && checkIsAdmin(req.user.isAdmin)) {
       checkAdmin = true;
     }
-    Nations.find({})
+    const name = req.query.name || "";
+    Nations.find({ name: { $regex: name, $options: "i" } })
       .then((nations) => {
         res.render("nation", {
           title: "The list of nations",
           nations: nations,
           checkAdmin: checkAdmin,
-          // showListUser: showListUser:
+          name: name,
         });
       })
       .catch(next);

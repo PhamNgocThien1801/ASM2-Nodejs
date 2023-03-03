@@ -51,6 +51,20 @@
                                 </div>
                             </div>
                             <div class="field mt-3">
+                                <label class="label">Nation</label>
+                                <div class="field">
+                                    <div class=" select">
+                                        <select name="nation" class="form-control">
+                                            <% for(let nation of nations){ %>
+                                                <option value="<%=nation.name%>">
+                                                    <%= nation.name%>
+                                                </option>
+                                                <% } %>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field mt-3">
                                 <label class="label">Club</label>
                                 <div class="field">
                                     <div class=" select">
@@ -103,35 +117,6 @@
                 </div>
             </div>
         </div>
-        <!-- <nav class="navbar navbar-expand-lg bg-body-tertiary">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#">Navbar</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="d-flex">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Players</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/nations">Nations</a>
-                        </li>
-                    </ul>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                        Create
-                    </button>
-                </div>
-                <div class="d-flex" id="navbarSupportedContent">
-                    <form class="d-flex justify-content-end role="search">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="ml-1 btn btn-outline-success" type="submit">Search</button>
-                    </form>
-                    <button class="ml-3 btn btn-danger" type="submit"><a href="/auth/logout">logout</a></button>
-                </div>
-            </div>
-        </nav> -->
         <%- include('../views/navbar/navbar.ejs') %>
         <div class=" row row-cols-4 g-4">
             <% players.forEach(function(player) { %>
@@ -144,6 +129,9 @@
                             </h4>
                             <p class="card-text">
                                 Club: <%= player.club %>
+                            </p>
+                            <p class="card-text">
+                                Nation: <%= player.nation %>
                             </p>
                             <p class="card-text">
                                 Goals: <%= player.goal %>

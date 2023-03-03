@@ -12,6 +12,11 @@ const playerSchema = new Schema(
       type: String,
       require: true,
     },
+    nation: {
+      type: String,
+      ref: "Nations",
+      require: true,
+    },
     club: {
       type: String,
       require: true,

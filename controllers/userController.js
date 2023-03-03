@@ -180,10 +180,7 @@ class userController {
       checkAdmin = true;
     }
     if (age < 18 || age > 100) {
-      req.flash(
-        "error",
-        "Invalid year of birth entered. Please enter a valid year between 1900 and the current year"
-      );
+      req.flash("error", "age must > 18 and < 100");
       res.redirect("/auth/account");
     } else {
       User.updateOne({ _id: userID }, req.body)

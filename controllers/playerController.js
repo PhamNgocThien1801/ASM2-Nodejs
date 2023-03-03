@@ -1,6 +1,7 @@
 const Players = require("../models/player");
 const checkIsAdmin = require("../config/checkIsAdmin");
 const notAuthenticated = require("../config/notAuth");
+const Nations = require("../models/nation");
 
 let clubData = [
   { id: "1", name: "Arsenal" },
@@ -43,11 +44,16 @@ class playerController {
   // }
 
   index(req, res, next) {
+    let nations;
+    Nations.find().then((nation) => {
+      nations = nation;
+    });
     var checkAdmin = false;
     if (req.user && checkIsAdmin(req.user.isAdmin)) {
       checkAdmin = true;
     }
-    Players.find({})
+    const name = req.query.name || "";
+    Players.find({ name: { $regex: name, $options: "i" } })
       .then((players) => {
         res.render("player", {
           title: "The list of Players",
@@ -56,6 +62,8 @@ class playerController {
           locaList: locaData,
           isCaptainList: isCaptain,
           checkAdmin: checkAdmin,
+          name: name,
+          nations: nations,
         });
       })
       .catch(next);
@@ -77,6 +85,10 @@ class playerController {
   // }
 
   create(req, res, next) {
+    let nations;
+    Nations.find().then((nation) => {
+      nations = nation;
+    });
     var checkAdmin = false;
     if (req.user && checkIsAdmin(req.user.isAdmin)) {
       checkAdmin = true;
@@ -100,6 +112,10 @@ class playerController {
   }
 
   edit(req, res, next) {
+    let nations;
+    Nations.find().then((nation) => {
+      nations = nation;
+    });
     var checkAdmin = false;
     if (req.user && checkIsAdmin(req.user.isAdmin)) {
       checkAdmin = true;
@@ -114,6 +130,7 @@ class playerController {
           locaList: locaData,
           isCaptainList: isCaptain,
           checkAdmin: checkAdmin,
+          nations: nations,
         });
       })
       .catch((err) => {
@@ -130,6 +147,10 @@ class playerController {
       });
   }
   update(req, res, next) {
+    let nations;
+    Nations.find().then((nation) => {
+      nations = nation;
+    });
     var checkAdmin = false;
     if (req.user && checkIsAdmin(req.user.isAdmin)) {
       checkAdmin = true;
@@ -140,6 +161,17 @@ class playerController {
         res.redirect("/");
       })
       .catch((err) => {
+        Players.findById(playerID).then((player) => {
+          res.render("editPlayer", {
+            title: "The detail of Player",
+            player: player,
+            clubList: clubData,
+            locaList: locaData,
+            isCaptainList: isCaptain,
+            checkAdmin: checkAdmin,
+            nations: nations,
+          });
+        });
         if (err.code === 11000) {
           // Duplicate key error, return error message to user
           req.flash("error", "Name already exists");
