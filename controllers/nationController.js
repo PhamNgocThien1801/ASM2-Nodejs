@@ -3,27 +3,82 @@ const checkIsAdmin = require("../config/checkIsAdmin");
 
 class nationController {
   index(req, res, next) {
-    // var showListUser = false;
-    // if (checkIsAdmin(req.user.isAdmin)) {
-    //   showListUser = true;
-    // }
     var checkAdmin = false;
     if (req.user && checkIsAdmin(req.user.isAdmin)) {
       checkAdmin = true;
     }
     const name = req.query.name || "";
+    const currentPage = parseInt(req.query.page) || 1; // current page number, default is 1
+    const perPage = 6; // number of nations to be displayed per page
+    const skip = (currentPage - 1) * perPage; // number of nations to be skipped
+
     Nations.find({ name: { $regex: name, $options: "i" } })
+      .skip(skip)
+      .limit(perPage)
       .then((nations) => {
-        res.render("nation", {
-          title: "The list of nations",
-          nations: nations,
-          checkAdmin: checkAdmin,
-          name: name,
-        });
+        Nations.countDocuments({ name: { $regex: name, $options: "i" } })
+          .then((count) => {
+            res.render("nation", {
+              title: "The list of nations",
+              nations: nations,
+              checkAdmin: checkAdmin,
+              name: name,
+              currentPage: currentPage, // current page number
+              pages: Math.ceil(count / perPage),
+            });
+          })
+          .catch(next);
       })
       .catch(next);
     console.log(req.body);
   }
+
+  // index(req, res, next) {
+  //   var checkAdmin = false;
+  //   if (req.user && checkIsAdmin(req.user.isAdmin)) {
+  //     checkAdmin = true;
+  //   }
+  //   const name = req.query.name || "";
+  //   Nations.find({ name: { $regex: name, $options: "i" } })
+  //     .then((nations) => {
+  //       res.render("nation", {
+  //         title: "The list of nations",
+  //         nations: nations,
+  //         checkAdmin: checkAdmin,
+  //         name: name,
+  //       });
+  //     })
+  //     .catch(next);
+  //   console.log(req.body);
+  // }
+
+  // index(req, res, next) {
+  //   var checkAdmin = false;
+  //   if (req.user && checkIsAdmin(req.user.isAdmin)) {
+  //     checkAdmin = true;
+  //   }
+  //   const name = req.query.name || "";
+  //   const currentPage = Number(req.query.page) || 1;
+  //   const perPage = 6;
+  //   Nations.find({ name: { $regex: name, $options: "i" } }).then((count) => {
+  //     Nations.find({ name: { $regex: name, $options: "i" } })
+  //       .skip((currentPage - 1) * perPage)
+  //       .limit(perPage)
+  //       .then((nations) => {
+  //         res.render("nation", {
+  //           title: "The list of nations",
+  //           nations: nations,
+  //           checkAdmin: checkAdmin,
+  //           name: name,
+  //           currentPage: currentPage,
+  //           pages: Math.ceil(count / perPage),
+  //         });
+  //       })
+  //       .catch(next);
+  //     console.log(req.body);
+  //   });
+  // }
+
   create(req, res, next) {
     const nation = new Nations(req.body);
     var checkAdmin = false;

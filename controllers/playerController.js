@@ -53,22 +53,60 @@ class playerController {
       checkAdmin = true;
     }
     const name = req.query.name || "";
+    const currentPage = Number(req.query.page) || 1;
+    const perPage = 6;
     Players.find({ name: { $regex: name, $options: "i" } })
+      .skip((currentPage - 1) * perPage)
+      .limit(perPage)
       .then((players) => {
-        res.render("player", {
-          title: "The list of Players",
-          players: players,
-          clubList: clubData,
-          locaList: locaData,
-          isCaptainList: isCaptain,
-          checkAdmin: checkAdmin,
-          name: name,
-          nations: nations,
-        });
+        Players.countDocuments({ name: { $regex: name, $options: "i" } })
+          .then((count) => {
+            res.render("player", {
+              title: "The list of Players",
+              players: players,
+              clubList: clubData,
+              locaList: locaData,
+              isCaptainList: isCaptain,
+              checkAdmin: checkAdmin,
+              name: name,
+              nations: nations,
+              currentPage: currentPage,
+              pages: Math.ceil(count / perPage),
+            });
+          })
+          .catch(next);
       })
       .catch(next);
     console.log(req.body);
   }
+
+  // index(req, res, next) {
+  //   let nations;
+  //   Nations.find().then((nation) => {
+  //     nations = nation;
+  //   });
+  //   var checkAdmin = false;
+  //   if (req.user && checkIsAdmin(req.user.isAdmin)) {
+  //     checkAdmin = true;
+  //   }
+  //   const name = req.query.name || "";
+  //   Players.find({ name: { $regex: name, $options: "i" } })
+  //     .then((players) => {
+  //       res.render("player", {
+  //         title: "The list of Players",
+  //         players: players,
+  //         clubList: clubData,
+  //         locaList: locaData,
+  //         isCaptainList: isCaptain,
+  //         checkAdmin: checkAdmin,
+  //         name: name,
+  //         nations: nations,
+  //       });
+  //     })
+  //     .catch(next);
+  //   console.log(req.body);
+  // }
+
   // create(req, res, next) {
   //   var checkAdmin = false;
 
