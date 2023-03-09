@@ -28,21 +28,6 @@ let isCaptain = [
 ];
 
 class playerController {
-  // account(req, res, next) {
-  //   var userID = req.user._id;
-  //   var showListUser = false;
-  //   User.findById(userID).then((user) => {
-  //     res.render("user", {
-  //       title: "Account Page",
-  //       user: user,
-  //       showListUser: showListUser,
-  //     });
-  //   });
-  //   // if (checkIsAdmin(req.user.isAdmin)) {
-  //   //   showListUser = true;
-  //   // }
-  // }
-
   index(req, res, next) {
     let nations;
     Nations.find().then((nation) => {
@@ -79,48 +64,6 @@ class playerController {
       .catch(next);
     console.log(req.body);
   }
-
-  // index(req, res, next) {
-  //   let nations;
-  //   Nations.find().then((nation) => {
-  //     nations = nation;
-  //   });
-  //   var checkAdmin = false;
-  //   if (req.user && checkIsAdmin(req.user.isAdmin)) {
-  //     checkAdmin = true;
-  //   }
-  //   const name = req.query.name || "";
-  //   Players.find({ name: { $regex: name, $options: "i" } })
-  //     .then((players) => {
-  //       res.render("player", {
-  //         title: "The list of Players",
-  //         players: players,
-  //         clubList: clubData,
-  //         locaList: locaData,
-  //         isCaptainList: isCaptain,
-  //         checkAdmin: checkAdmin,
-  //         name: name,
-  //         nations: nations,
-  //       });
-  //     })
-  //     .catch(next);
-  //   console.log(req.body);
-  // }
-
-  // create(req, res, next) {
-  //   var checkAdmin = false;
-
-  //   if (req.user && checkIsAdmin(req.user.isAdmin)) {
-  //     checkAdmin = true;
-  //   }
-  //   const player = new Players(req.body);
-  //   player
-  //     .save()
-  //     .then(() => res.redirect("/"))
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }
 
   create(req, res, next) {
     let nations;

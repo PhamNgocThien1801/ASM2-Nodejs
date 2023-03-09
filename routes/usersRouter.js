@@ -31,4 +31,9 @@ userRouter
   .route("/account/listUser")
   .get(ensureAuthenticated, userController.listUser);
 
+userRouter
+  .route("/account/editPassword/:accountID")
+  .get(ensureAuthenticated, userController.editPassword)
+  .post(ensureAuthenticated, userController.changePassword);
+
 module.exports = userRouter;

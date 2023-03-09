@@ -2,6 +2,7 @@ const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const passport = require("passport");
 const checkIsAdmin = require("../config/checkIsAdmin");
+let otherBcrypt = require("bcrypt");
 
 var today = new Date();
 var currentYear = today.getFullYear();
@@ -148,29 +149,6 @@ class userController {
         console.log(err);
       });
   }
-  // update(req, res, next) {
-  //   var checkAdmin = false;
-  //   if (req.user && checkIsAdmin(req.user.isAdmin)) {
-  //     checkAdmin = true;
-  //   }
-  //   const playerID = req.params.id;
-  //   Players.updateOne({ _id: playerID }, req.body)
-  //     .then(() => {
-  //       res.redirect("/");
-  //     })
-  //     .catch((err) => {
-  //       if (err.code === 11000) {
-  //         // Duplicate key error, return error message to user
-  //         req.flash("error", "Name already exists");
-  //         res.redirect("/");
-  //       } else {
-  //         // Other error, log and return generic error message to user
-  //         console.log(err);
-  //         res.status(500).send("Error creating player");
-  //       }
-  //       console.log(err);
-  //     });
-  // }
   updateAccount(req, res, next) {
     var userID = req.params.accountID;
     var checkAdmin = false;
@@ -193,6 +171,78 @@ class userController {
         });
     }
   }
+
+  editPassword(req, res, next) {
+    var userID = req.params.accountID;
+    var checkAdmin = true;
+    User.findById(userID)
+      .then((user) => {
+        res.render("editPassword", {
+          title: "Change Password",
+          user: user,
+          checkAdmin: checkAdmin,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  changePassword(req, res, next) {
+    var userID = req.params.accountID;
+    var oldPassword = req.body.oldPassword;
+    var newPassword = req.body.newPassword;
+    var confirmPassword = req.body.confirmPassword;
+
+    // validate old password
+    User.findById(userID)
+      .then((user) => {
+        if (!bcrypt.compareSync(oldPassword, user.password)) {
+          req.flash("error", "Invalid Old Password");
+          res.redirect("/auth/account");
+          return;
+        }
+
+        // validate new password
+        if (!newPassword || newPassword.length < 6) {
+          req.flash("error", "Invalid New Password");
+          res.redirect("/auth/account");
+          return;
+        }
+
+        // confirm new password
+        if (newPassword !== confirmPassword) {
+          req.flash("error", "Passwords do not match");
+          res.redirect("/auth/account");
+          return;
+        }
+
+        // encrypt password
+        var salt = bcrypt.genSaltSync(10);
+        var hash = bcrypt.hashSync(newPassword, salt);
+
+        // update password
+        User.updateOne({ _id: userID }, { password: hash })
+          .then(() => {
+            req.logout(function (err) {
+              if (err) return next(err);
+              req.flash("success_msg", "Change Password Success");
+              res.redirect("/auth");
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+            req.flash("error", "Error Change Password");
+            res.redirect("/auth/account");
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+        req.flash("error", "Error Change Password");
+        res.redirect("/auth/account");
+      });
+  }
+
   listUser(req, res, next) {
     var checkAdmin = false;
     if (req.user && checkIsAdmin(req.user.isAdmin)) {
