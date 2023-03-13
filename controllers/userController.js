@@ -210,6 +210,16 @@ class userController {
           return;
         }
 
+        // check if new password is the same as the old password
+        if (oldPassword === newPassword) {
+          req.flash(
+            "error",
+            "New password must be different from old password"
+          );
+          res.redirect("/auth/account");
+          return;
+        }
+
         // confirm new password
         if (newPassword !== confirmPassword) {
           req.flash("error", "Passwords do not match");
@@ -244,23 +254,45 @@ class userController {
   }
 
   listUser(req, res, next) {
-    var checkAdmin = false;
+    let checkAdmin = false;
+    let isAdmin = req.query.isAdmin; // check if query parameter for isAdmin is present
+
     if (req.user && checkIsAdmin(req.user.isAdmin)) {
       checkAdmin = true;
     }
+
     if (checkIsAdmin(req.user.isAdmin)) {
-      User.find({}).then((user) => {
-        res.render("listUser", {
-          title: "List User",
-          user: user,
-          checkAdmin: checkAdmin,
-        });
-      });
+      const currentPage = Number(req.query.page) || 1;
+      const perPage = 10;
+
+      let query = {}; // create an empty object for query
+
+      if (isAdmin === "true") {
+        query.isAdmin = true; // filter by isAdmin if the query parameter is "true"
+      } else if (isAdmin === "false") {
+        query.isAdmin = false; // filter by non-admin if the query parameter is "false"
+      }
+
+      User.find(query)
+        .skip((currentPage - 1) * perPage)
+        .limit(perPage)
+        .then((users) => {
+          User.countDocuments(query).then((count) => {
+            res.render("listUser", {
+              title: "List User",
+              user: users,
+              checkAdmin: checkAdmin,
+              isAdmin: isAdmin, // pass the isAdmin value to the view
+              currentPage: currentPage,
+              pages: Math.ceil(count / perPage),
+            });
+          });
+        })
+        .catch(next);
     } else {
       req.flash("error_msg", "Only Admin can do this action!");
       res.redirect("/auth/account");
     }
   }
 }
-
 module.exports = new userController();

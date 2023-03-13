@@ -11,6 +11,17 @@
 <body>
     <div class="container">
         <%- include('../views/navbar/navbar.ejs') %>
+        <form method="GET">
+            <div class="form-inline my-2 my-lg-0">
+                <select id="adminFilter" name="isAdmin" class="ml-3 mr-3 form-control ">
+                    <option value="">All Users</option>
+                    <option value="true">Admin Users</option>
+                    <option value="false">Non-Admin Users</option>
+                </select>
+                <button type="submit" class="btn btn-primary">Filter</button>
+            </div>
+        </form>
+
         <table class="table mt-3">
             <tbody>
                 <thead>
@@ -40,6 +51,40 @@
                     <%})%>
             </tbody>
         </table>
+        <div class="mt-3 d-flex justify-content-center">
+            <nav aria-label="Players Pagination mt-3">
+                <ul class="pagination">
+                    <% if (currentPage> 1) { %>
+                        <li class="page-item">
+                            <a class="page-link"
+                                href="?page=<%= currentPage - 1 %>"
+                                aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
+                        <% } %>
+                            <% for (let i=1; i <=pages; i++) { %>
+                                <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+                                    <a class="page-link"
+                                        href="?page=<%= i %>">
+                                        <%= i %>
+                                    </a>
+                                </li>
+                                <% } %>
+                                    <% if (currentPage < pages) { %>
+                                        <li class="page-item">
+                                            <a class="page-link"
+                                                href="?page=<%= currentPage + 1 %>"
+                                                aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                                <span class="sr-only">Next</span>
+                                            </a>
+                                        </li>
+                                        <% } %>
+                </ul>
+            </nav>
+        </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
