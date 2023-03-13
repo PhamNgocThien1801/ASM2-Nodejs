@@ -23,6 +23,7 @@
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
+                
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Create new Player</h5>
@@ -118,7 +119,47 @@
             </div>
         </div>
         <%- include('../views/navbar/navbar.ejs') %>
-        <div class=" row row-cols-4 g-4">
+        <div class="mt-3">
+            <form class="form-inline my-2 my-lg-0">
+                <select name="nation" class="form-control">
+                    <option value="">Choose Nation</option>
+                    <% for(let nation of nations){%>
+                        <option value="<%= nation.name%>"
+                            <%=JSON.stringify(nation.name)===JSON.stringify(players.nation)?'selected':''%>
+                            >
+                            <%= nation.name%>
+                        </option>
+                        <%}%>
+                </select>
+                <select name="club" class="ml-3 mr-3 form-control">
+                    <option value="">Choose Club</option>
+                    <option value="Manchester United">Manchester United</option>
+                    <option value="Chelsea">Chelsea</option>
+                    <option value="Manchester City">Manchester City</option>
+                    <option value="PSG">PSG</option>
+                    <option value="Inter Milan">Inter Milan</option>
+                    <option value="Real Madrid">Real Madrid</option>
+                    <option value="Barcelona">Barcelona</option>
+                </select>
+                <select name="loca" class="mr-3 form-control">
+                    <option value="">Choose Position</option>
+                    <option value="ST">Striker</option>
+                    <option value="CAM">Attacking Midfielder</option>
+                    <option value="LW">Left winger</option>
+                    <option value="RW">Right winger</option>
+                    <option value="CB">Center Back</option>
+                    <option value="LB">Left Back</option>
+                    <option value="GK">Goalkeeper</option>
+                </select>
+                <select name="isCaptain" class="mr-3 form-control">
+                    <option value="">Choose Is Captain</option>
+                    <option value="Not Captain">Not Captain</option>
+                    <option value="Is Captain">Is Captain</option>
+                </select>
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Approve</button>
+            </form>
+        </div>
+        <div class="row row-cols-4 g-4">
             <% players.forEach(function(player) { %>
                 <div class="col-sm-4">
                     <div class="card item mt-3">
@@ -162,27 +203,33 @@
                 </div>
                 <% }) %>
         </div>
+        
         <div class="mt-3 d-flex justify-content-center">
             <nav aria-label="Players Pagination mt-3">
                 <ul class="pagination">
                     <% if (currentPage> 1) { %>
                         <li class="page-item">
-                            <a class="page-link" href="?page=<%= currentPage - 1 %>" aria-label="Previous">
+                            <a class="page-link"
+                                href="?page=<%= currentPage - 1 %>&name=<%= name %>&club=<%= club %>&nation=<%= nation %>&loca=<%= loca %>&isCaptain=<%= isCaptain %>"
+                                aria-label="Previous">
                                 <span aria-hidden="true">&laquo;</span>
                                 <span class="sr-only">Previous</span>
                             </a>
                         </li>
                         <% } %>
                             <% for (let i=1; i <=pages; i++) { %>
-                                <li class="page-item <% if (i === currentPage) { %>active<% } %>">
-                                    <a class="page-link" href="?page=<%= i %>">
+                                <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+                                    <a class="page-link"
+                                        href="?page=<%= i %>&name=<%= name %>&club=<%= club %>&nation=<%= nation %>&loca=<%= loca %>&isCaptain=<%= isCaptain %>">
                                         <%= i %>
                                     </a>
                                 </li>
                                 <% } %>
                                     <% if (currentPage < pages) { %>
                                         <li class="page-item">
-                                            <a class="page-link" href="?page=<%= currentPage + 1 %>" aria-label="Next">
+                                            <a class="page-link"
+                                                href="?page=<%= currentPage + 1 %>&name=<%= name %>&club=<%= club %>&nation=<%= nation %>&loca=<%= loca %>&isCaptain=<%= isCaptain %>"
+                                                aria-label="Next">
                                                 <span aria-hidden="true">&raquo;</span>
                                                 <span class="sr-only">Next</span>
                                             </a>

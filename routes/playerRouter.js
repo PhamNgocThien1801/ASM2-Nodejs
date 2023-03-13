@@ -14,4 +14,6 @@ playerRouter
 
 playerRouter.route("/delete/:id").get(playerController.delete);
 
+playerRouter;
+
 module.exports = playerRouter;

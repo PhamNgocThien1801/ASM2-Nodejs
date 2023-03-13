@@ -58,12 +58,14 @@
                         <div class="field">
                             <div class=" select is-fullwidth">
                                 <select name="nation" class="form-control">
-                                    <% for(let nation of nations){%>
-                                        <option value="<%= nation.name%>"
-                                            <%=JSON.stringify(nation.name)===JSON.stringify(player.nation)?'selected':''%>>
-                                            <%= nation.name%>
-                                        </option>
+                                    <% if (nations && Array.isArray(nations)) { %>
+                                        <% for(let nation of nations){%>
+                                            <option value="<%= nation.name%>"
+                                                <%=JSON.stringify(nation.name)===JSON.stringify(player.nation)?'selected':''%>>
+                                                <%= nation.name%>
+                                            </option>
                                         <%}%>
+                                    <% } %>
                                 </select>
                             </div>
                         </div>

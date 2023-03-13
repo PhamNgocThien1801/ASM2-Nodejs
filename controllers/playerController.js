@@ -22,8 +22,8 @@ let locaData = [
   { id: "6", name: "LB" },
   { id: "7", name: "GK" },
 ];
-let isCaptain = [
-  { id: "1", name: "Captain" },
+let CaptainData = [
+  { id: "1", name: "Is Captain" },
   { id: "2", name: "Not Captain" },
 ];
 
@@ -38,22 +38,42 @@ class playerController {
       checkAdmin = true;
     }
     const name = req.query.name || "";
+    const clubName = req.query.club || "";
+    const nationName = req.query.nation || "";
+    const positionName = req.query.loca || "";
+    const Captain = req.query.isCaptain || "";
     const currentPage = Number(req.query.page) || 1;
     const perPage = 6;
-    Players.find({ name: { $regex: name, $options: "i" } })
+    Players.find({
+      name: { $regex: name, $options: "i" },
+      club: { $regex: clubName, $options: "i" },
+      loca: { $regex: positionName, $options: "i" },
+      isCaptain: { $regex: Captain, $options: "i" },
+      nation: { $regex: nationName, $options: "i" },
+    })
       .skip((currentPage - 1) * perPage)
       .limit(perPage)
       .then((players) => {
-        Players.countDocuments({ name: { $regex: name, $options: "i" } })
+        Players.countDocuments({
+          name: { $regex: name, $options: "i" },
+          club: { $regex: clubName, $options: "i" },
+          loca: { $regex: positionName, $options: "i" },
+          isCaptain: { $regex: Captain, $options: "i" },
+          nation: { $regex: nationName, $options: "i" },
+        })
           .then((count) => {
             res.render("player", {
-              title: "The list of Players",
+              title: "Filtered list of Players",
               players: players,
               clubList: clubData,
               locaList: locaData,
-              isCaptainList: isCaptain,
+              isCaptainList: CaptainData,
               checkAdmin: checkAdmin,
               name: name,
+              club: clubName,
+              nation: nationName,
+              loca: positionName,
+              isCaptain: Captain,
               nations: nations,
               currentPage: currentPage,
               pages: Math.ceil(count / perPage),
@@ -62,9 +82,54 @@ class playerController {
           .catch(next);
       })
       .catch(next);
-    console.log(req.body);
   }
 
+  // let nations;
+  // Nations.find().then((nation) => {
+  //   nations = nation;
+  // });
+  // var checkAdmin = false;
+  // if (req.user && checkIsAdmin(req.user.isAdmin)) {
+  //   checkAdmin = true;
+  // }
+  // const name = req.query.name || "";
+  // const clubName = req.query.club || "";
+  // const nationName = req.query.nation || "";
+  // const currentPage = Number(req.query.page) || 1;
+  // const perPage = 6;
+  // Players.find({
+  //   name: { $regex: name, $options: "i" },
+  //   // club: { $regex: clubName, $options: "i" },
+  //   // nation: { $regex: nationName, $options: "i" },
+  // })
+  //   .skip((currentPage - 1) * perPage)
+  //   .limit(perPage)
+  //   .then((players) => {
+  //     Players.countDocuments({
+  //       name: { $regex: name, $options: "i" },
+  //       // club: { $regex: clubName, $options: "i" },
+  //       // nation: { $regex: nationName, $options: "i" },
+  //     })
+  //       .then((count) => {
+  //         res.render("player", {
+  //           title: "The list of Players",
+  //           players: players,
+  //           clubList: clubData,
+  //           locaList: locaData,
+  //           isCaptainList: isCaptain,
+  //           checkAdmin: checkAdmin,
+  //           name: name,
+  //           // club: clubName,
+  //           // nation: nationName,
+  //           nations: nations,
+  //           currentPage: currentPage,
+  //           pages: Math.ceil(count / perPage),
+  //         });
+  //       })
+  //       .catch(next);
+  //   })
+  //   .catch(next);
+  // console.log(req.body);
   create(req, res, next) {
     let nations;
     Nations.find().then((nation) => {
@@ -109,7 +174,7 @@ class playerController {
           player: player,
           clubList: clubData,
           locaList: locaData,
-          isCaptainList: isCaptain,
+          isCaptainList: CaptainData,
           checkAdmin: checkAdmin,
           nations: nations,
         });
@@ -148,7 +213,7 @@ class playerController {
             player: player,
             clubList: clubData,
             locaList: locaData,
-            isCaptainList: isCaptain,
+            isCaptainList: CaptainData,
             checkAdmin: checkAdmin,
             nations: nations,
           });
